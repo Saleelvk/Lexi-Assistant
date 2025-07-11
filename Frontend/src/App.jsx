@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 import {
-  Search,
   FileText,
   ExternalLink,
-  Sparkles,
-  Scale,
-  Clock,
+
 } from "lucide-react";
+import Header from "./component/Header";
+import SearchBox from "./component/SearchBox";
+import Footer from "./component/Footer";
 
 const App = () => {
   const [query, setQuery] = useState("");
@@ -47,6 +47,7 @@ const App = () => {
           setLoading(false);
         }
       }, 20);
+      setQuery( "")
     }, 500);
   };
 
@@ -85,72 +86,14 @@ const App = () => {
       {/* animations-End */}
       <div className="relative z-10 min-h-screen  font-inter p-6 flex items-center justify-center">
         <div className="max-w-4xl w-full">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center mb-4">
-              <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-4 rounded-full shadow-lg">
-                <Scale className="w-8 h-8 text-white" />
-              </div>
-            </div>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent mb-4">
-              Lexi Legal Assistant
-            </h1>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Your AI-powered legal research companion. Ask complex legal
-              questions and get precise answers backed by authoritative sources.
-            </p>
-          </div>
-
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20 mb-8">
-            <div className="relative">
-              <textarea
-                placeholder="Ask your legal question..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="  w-full p-6 bg-white/5 border-2 border-white/20  rounded-2xl text-white placeholder-gray-300 resize-none focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/50 transition-all duration-300 text-lg"
-                rows="4"
-              />
-              <div className="absolute bottom-4 right-4 text-gray-400 text-sm">
-                Ctrl+Enter to submit
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between mt-6">
-              <div className="flex items-center space-x-4 text-gray-300">
-                <div className="flex items-center space-x-2">
-                  <Sparkles className="w-4 h-4" />
-                  <span className="text-sm">AI-Powered</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <FileText className="w-4 h-4" />
-                  <span className="text-sm">Source Citations</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Clock className="w-4 h-4" />
-                  <span className="text-sm">Instant Results</span>
-                </div>
-              </div>
-
-              <button
-                onClick={handleSubmit}
-                disabled={loading || !query.trim()}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg flex items-center space-x-2"
-              >
-                {loading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    <span>Analyzing...</span>
-                  </>
-                ) : (
-                  <>
-                    <Search className="w-5 h-5" />
-                    <span>Search Legal Database</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
+          <Header />
+          <SearchBox
+            query={query}
+            setQuery={setQuery}
+            handleSubmit={handleSubmit}
+            loading={loading}
+            handleKeyPress={handleKeyPress}
+          />
 
           {/* Response Display */}
           {response && (
@@ -214,13 +157,10 @@ const App = () => {
             </div>
           )}
 
-          {/* Footer-part */}
-          <div className="text-center mt-12 text-gray-400">
-            <p>
-              Powered by advanced AI • Always verify legal advice with qualified
-              professionals
-            </p>
-          </div>
+
+
+          
+           <Footer/>
         </div>
       </div>
     </div>
